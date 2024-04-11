@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatter Up</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="./img/favicon/favicon.ico">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: url("./img/bg.png");
+            object-fit: cover;
+            font-family: "Merriweather", serif;
+        }
+
+        .hidden {
+            display: none
+        }
+
+        .container {
+            max-width: 1000px;
+            max-width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .heading {
+            color: #2f2f2f;
+            text-transform: uppercase;
+            font-weight: 800;
+            font-size: 40px;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 10px double black;
+        }
+
+        .glass {
+            background:  linear-gradient(135deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            width: 75%;
+            height: 80%;
+            position: relative;
+        }
+
+        .login_form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            padding: 0 20px;
+            display: none;
+        }
+
+        .register_head {
+            color: #2f2f2f;
+            text-transform: uppercase;
+            font-weight: 800;
+            font-size: 25px;
+            text-align: left;
+            text-decoration: underline;
+        }
+
+        .register_user {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .chat_box {
+            /* display: none; */
+            position: relative;
+            padding: 20px;
+            height: 100%;
+        }
+
+        .chat_opt {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            border-bottom: 1px solid black;
+        }
+
+        .users {
+            height: 150px;
+            width: 100px;
+            background-color: #bfbfbf;
+            border: 1px solid #2f2f2f;
+            position: absolute;
+            right: 15px;
+            top: 41px;
+            text-align: center;
+            border-radius: 10px;
+            overflow-y: scroll;
+            scroll-behavior: smooth;    
+        }
+
+        .user {
+            border-bottom: 2px solid transparent;
+            border-image: linear-gradient(90deg, rgba(120,120,120,1) 0%, rgba(51,51,51,1) 30%, rgba(51,51,51,1) 70%, rgba(120,120,120,1) 100%);
+            border-image-slice: 1;
+            padding: 10px 0;
+        }
+
+        .input_box {
+            position: absolute;
+            bottom: 20px;
+            display: flex;
+            width: 97%;
+            margin: auto;
+        }
+
+        .message, .user_details {
+            width: 100%;
+            padding: 5px;
+            border-radius: 25px;
+            border: 0;
+            outline: 0;
+            padding-left: 20px;
+            font-weight: 600;
+            color: #4c4c4c;
+            background-color: #e7e7e7;
+        }
+
+        .user_details {
+            border-radius: 15px;
+            margin: 15px auto;
+        }
+
+        .user_data {
+            font-size: 14px;
+            font-family: "Roboto";
+            font-weight: 600;
+            margin-inline: 30px;
+        }
+
+        .message::placeholder {
+            color: #999;
+            font-weight: 600;
+        }
+
+        .send_btn {
+            background-color: transparent;
+            border: 0;
+            outline: 0;
+            position: absolute;
+            right: 7px;
+            top: 3px;
+            cursor: pointer;
+        }
+
+        .send_img {
+            width: 20px;
+        }
+
+        .view {
+            color: red;
+            cursor: pointer;
+        }
+
+        .view:hover {
+            text-decoration: underline;
+        }
+
+        .chats {
+            height: 88%;
+            overflow-y: scroll;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px; 
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #393939; 
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555; 
+        }
+
+        .users_chat {
+            display: flex;
+            align-items: center;
+            margin: 25px auto;
+        }
+
+        .user_chat_message {
+            font-size: 14px;
+            max-width: 75%;
+            background-color: #393939;
+            color: #fff;
+            margin-inline: 15px;
+            line-height: 1.4;
+            letter-spacing: 1.5px;
+            padding: 15px;
+            border-top-right-radius: 20px;
+            border-bottom-left-radius: 20px;
+        }
+
+        .current_user_chat {
+            flex-direction: row-reverse;
+            justify-content: flex-start;
+        }
+
+        .current_user_message {
+            background-color: #1f1f1f;
+            color: #fff;
+        }
+
+        .user_icon {
+            height: 40px;
+        }
+
+        .login_form_details {
+            margin-top: 16%;
+        }
+
+        .register_btn {
+            background: #34d958;
+            background-image: -webkit-linear-gradient(top, #34d958, #2bb83d);
+            background-image: -moz-linear-gradient(top, #34d958, #2bb83d);
+            background-image: -ms-linear-gradient(top, #34d958, #2bb83d);
+            background-image: -o-linear-gradient(top, #34d958, #2bb83d);
+            background-image: linear-gradient(to bottom, #34d958, #2bb83d);
+            -webkit-border-radius: 15;
+            -moz-border-radius: 15;
+            border-radius: 15px;
+            text-shadow: 0px 1px 2px #666666;
+            color: #ffffff;
+            font-size: 20px;
+            padding: 10px 20px 10px 20px;
+            text-decoration: none;
+            border: 0;
+        }
+
+        .register_btn:hover {
+            background: #2bb83d;
+            text-decoration: none;
+        }
+
+        .user_img {
+            display: none;
+        }
+
+        .current_message {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        @media(min-width: 1200px ) {
+            .input_box {
+                width: 93%;
+            }
+        }
+
+        @media(min-width: 756px) {
+            .user_img {
+                display: inline-flex;
+                height:75vh;
+            }
+            .heading {
+                font-size: 28px;
+            }
+
+            .glass {
+                width: 90%;
+            }
+
+            .chat_box {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <h1 class="heading">Chatter application</h1>
+
+        <div class="glass">
+            <form action="" method="post" class="login_form" id="login-form">
+                <div class="register_user">
+                    <div class="login_form_details">
+                        <h3 class="register_head">Registation</h3>
+                        <input type="text" placeholder="Enter the Username" name="username" id="username" class="user_details" autocomplete="off" required autofocus>
+
+                        <select name="gender" id="gender" class="user_details" required>
+                            <option value="0" hidden>Select Your Gender</option>
+                            <option value="1">Male</option>
+                            <option value="2">Female</option>
+                        </select>
+
+                        <button class="register_btn" id="register_btn" type="submit">Register</button>
+                    </div>
+                    <img src="./img/Login.svg" alt="Register" class="user_img">
+                </div>
+            </form>
+
+            <div class="chat_box" id="chat-box">
+                <div class="chat_opt">
+                    <h3 class="welcome_mgs">
+                        <span><img src="./img/circle-solid.png" alt="" width="15px" ></span>
+                        <span>Welcome Yuvaraj</span>
+                    </h3>
+
+                    <h3 class="users_online">
+                        <span>Number of users: 2</span>
+                        <span class="view" id="view" onclick="listUsers()">View All</span>
+                    </h3>
+                </div>
+
+                <div class="users hidden" id="users">
+                    <p class="user">Yuvaraj</p>
+                    <p class="user">Dhathva</p>
+                </div>
+
+                <div class="chats" id="chats">
+                    <div class="users_chat">
+                        <img class="user_icon" src="./img/male.png" alt="profile" >
+
+                        <div class="user_message_data">
+                            <p class="user_chat_message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio veritatis blanditiis cum voluptatum perspiciatis explicabo voluptas molestias quas exercitationem, aperiam consequatur, reiciendis doloremque, consequuntur dicta.</p>
+                            <p class="user_data">
+                                <span>Yuvaraj </span>
+                                <span>12:30:01 PM</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="users_chat current_user_chat" id="current_user_chat">
+                        <img class="user_icon" src="./img/female.png" alt="profile">
+
+                        <div class="user_message_data current_message">
+                            <p class="user_chat_message current_user_message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio veritatis blanditiis cum voluptatum perspiciatis explicabo voluptas molestias quas exercit.</p>
+                            <p class="user_data">
+                                <span>Dhathva </span>
+                                <span>12:31:01 PM</span>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="input_box">
+                    <input type="text" placeholder="Please Enter Your Message..." id="message" class="message" autocomplete="off" autofocus>
+                    <button class="send_btn" id="send_btn"><img src="./img/send-button.png" alt="send-btn" class="send_img"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DOM operations script. -->
+    <script>
+        // Popup the number of users.
+        function listUsers() {
+            document.getElementById("users").classList.toggle("hidden");
+        }
+
+        // Check for the username and gender.
+        const loginForm = document.forms[0];
+        loginForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            let username = document.getElementById("username");
+            let gender = document.getElementById("gender").value;
+
+            let chatBox = document.getElementById("chat-box");
+
+            if(username && gender) {
+                loginForm.style.display = "none";
+                chatBox.style.display = "block";
+            }
+
+        })
+    </script>
+</body>
+</html>
