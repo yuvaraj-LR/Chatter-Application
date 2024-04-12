@@ -25,6 +25,46 @@ const io = new Server(server, {
 io.on("connect", (socket) => {
     console.log("Connection is established.");
 
+    socket.on("join", (userDetails) => {
+        socket.username = userDetails.username;
+        socket.gender = Number(userDetails.gender);
+
+        // Load previous messages from DB.
+        chatModel.find().sort().limit(50)
+            .then(messages => {
+                socket.emit("load_message", messages)
+            }) 
+            .catch(e => {
+                console.log("Error", e);
+            })
+    });
+
+    // Send a message and store it in DB.
+    socket.on("new_message", (message) => {
+        let d = new Date();
+        let timestramp = d.toLocaleTimeString();
+
+        const newChat = new chatModel({
+            username: socket.username,
+            gender: socket.gender,
+            message,
+            timestramp
+        });
+
+        newChat.save();
+
+        let finalData = {
+            username: socket.username,
+            gender: socket.gender,
+            message,
+            timestramp
+        };
+
+        console.log("Before broadcast data", finalData);
+        // Broadcast the message.
+        socket.broadcast.emit("broadcast_message", finalData);
+    })
+
     socket.on("disconnect", () => {
         console.log("Disconnected.");
     })
