@@ -42,42 +42,18 @@
                     </h3>
 
                     <h3 class="users_online" id="user_online">
-                        <span>Number of users: 2</span>
+                        <span>Number of users: <span id="numberOfUser"></span> </span>
                         <span class="view" id="view" onclick="listUsers()">View All</span>
                     </h3>
                 </div>
 
                 <div class="users hidden" id="users">
-                    <p class="user">Yuvaraj</p>
-                    <p class="user">Dhathva</p>
+                    <!-- <p class="user">Yuvaraj</p>
+                    <p class="user">Dhathva</p> -->
                 </div>
 
                 <div class="chats" id="chats">
-                    <!-- 
-                    <div class="users_chat">
-                        <img class="user_icon" src="./img/male.png" alt="profile" >
 
-                        <div class="user_message_data">
-                            <p class="user_chat_message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio veritatis blanditiis cum voluptatum perspiciatis explicabo voluptas molestias quas exercitationem, aperiam consequatur, reiciendis doloremque, consequuntur dicta.</p>
-                            <p class="user_data">
-                                <span>Yuvaraj </span>
-                                <span>12:30:01 PM</span>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="users_chat current_user_chat" id="current_user_chat">
-                        <img class="user_icon" src="./img/female.png" alt="profile">
-
-                        <div class="user_message_data current_message">
-                            <p class="user_chat_message current_user_message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio veritatis blanditiis cum voluptatum perspiciatis explicabo voluptas molestias quas exercit.</p>
-                            <p class="user_data">
-                                <span>Dhathva </span>
-                                <span>12:31:01 PM</span>
-                            </p>
-                        </div>
-                    </div> 
-                    -->
                 </div>
                 <div class="input_box">
                     <input type="text" placeholder="Please Enter Your Message..." id="message" class="message" autocomplete="off" autofocus>
@@ -137,7 +113,8 @@
                         <span><img src="./img/circle-solid.png" alt="active" width="15px"></span>
                         <span>Welcome ${username}</span>
                     </h3>
-                `
+                `;
+
                 let range = document.createRange();
                 let fragment = range.createContextualFragment(welcomeMessage.trim());
                 welcomeMgs.appendChild(fragment);
@@ -226,6 +203,13 @@
                 let fragment = range.createContextualFragment(message.trim());
 
                 chatBox.appendChild(fragment);
+        })
+    
+        // User details
+        socket.on("user_count", (count) => {
+            console.log(count, "count...");
+            const numberOfUserSpan = document.getElementById("numberOfUser");
+            numberOfUserSpan.innerText = count;
         })
     </script>
 </body>

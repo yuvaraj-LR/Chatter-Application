@@ -29,6 +29,10 @@ io.on("connect", (socket) => {
         socket.username = userDetails.username;
         socket.gender = Number(userDetails.gender);
 
+        // Boardcast the number of active users.
+        const count = io.engine.clientsCount;
+        socket.emit("user_count", count);
+
         // Load previous messages from DB.
         chatModel.find().sort().limit(50)
             .then(messages => {
@@ -60,7 +64,6 @@ io.on("connect", (socket) => {
             timestramp
         };
 
-        console.log("Before broadcast data", finalData);
         // Broadcast the message.
         socket.broadcast.emit("broadcast_message", finalData);
     })

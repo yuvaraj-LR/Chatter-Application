@@ -82,9 +82,11 @@ body {
 
 .chat_opt {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
+    align-items: center;
     border-bottom: 1px solid black;
+    font-size: 14px;
 }
 
 .users {
@@ -112,7 +114,7 @@ body {
     position: absolute;
     bottom: 20px;
     display: flex;
-    width: 97%;
+    width: 85%;
     margin: auto;
 }
 
@@ -267,15 +269,8 @@ body {
     align-items: flex-end;
 }
 
-@media(min-width: 1200px ) {
-    .input_box {
-        width: 98%;
-    }
-}
-
 @media(min-width: 756px) {
     .user_img {
-        display: inline-flex;
         height:75vh;
     }
     .heading {
@@ -288,5 +283,23 @@ body {
 
     .chat_box {
         padding: 10px;
+    }
+
+    .chat_opt {
+        flex-direction: row;
+    }
+
+    .input_box {
+        width: 97%;
+    }
+}
+
+@media(min-width: 1200px ) {
+    .user_img {
+        display: inline-flex;
+    }
+
+    .input_box {
+        width: 98%;
     }
 }
