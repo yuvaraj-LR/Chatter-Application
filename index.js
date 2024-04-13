@@ -31,7 +31,13 @@ io.on("connect", (socket) => {
 
         // Boardcast the number of active users.
         const count = io.engine.clientsCount;
-        socket.emit("user_count", count);
+
+        const userActiveDetails = {
+            username: socket.username,
+            count
+        }
+
+        socket.emit("userDetail", userActiveDetails);
 
         // Load previous messages from DB.
         chatModel.find().sort().limit(50)

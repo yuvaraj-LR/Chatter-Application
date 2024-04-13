@@ -232,10 +232,6 @@ body {
     height: 40px;
 }
 
-.login_form_details {
-    margin-top: 16%;
-}
-
 .register_btn {
     background: #34d958;
     background-image: -webkit-linear-gradient(top, #34d958, #2bb83d);
@@ -295,6 +291,11 @@ body {
 }
 
 @media(min-width: 1200px ) {
+
+    .login_form_details{
+        margin: 16% 0;
+    }
+
     .user_img {
         display: inline-flex;
     }

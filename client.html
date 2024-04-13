@@ -206,11 +206,19 @@
         })
     
         // User details
-        socket.on("user_count", (count) => {
-            console.log(count, "count...");
+        socket.on("userDetail", (userData) => {
+            console.log(userData.count, "count...");
             const numberOfUserSpan = document.getElementById("numberOfUser");
-            numberOfUserSpan.innerText = count;
-        })
+            numberOfUserSpan.innerText = userData.count;
+
+            const username = document.getElementById("users");
+
+            const userp = `<p class="user">${userData.username}</p>`;
+
+            let range = document.createRange();
+            let fragment = range.createContextualFragment(userp.trim());
+            username.appendChild(fragment);
+        });
     </script>
 </body>
 </html>
