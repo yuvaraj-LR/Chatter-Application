@@ -4,6 +4,10 @@ import {Server} from "socket.io"
 import http from "http"
 import { connect } from "./config.js";
 import { chatModel } from "./chat.model.js";
+import dotenv from "dotenv"
+
+// Configure the .env files.
+dotenv.config({ path: ".env" });
 
 const app = express();
 
@@ -80,7 +84,7 @@ io.on("connect", (socket) => {
 });
 
 // 4. Listener.
-server.listen(3000, () => {
+server.listen(process.env.PORT, () => {
     console.log("Server is listening on 3000.");
     connect();
 })
